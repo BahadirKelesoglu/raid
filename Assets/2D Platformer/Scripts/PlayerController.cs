@@ -38,12 +38,14 @@ namespace Platformer
         public float timeBetweenShots = 0.5f;
         public Collider2D triggerCollider;
         public float moveSpeed = -3f;
+        BulletController bulletController;
 
         void Start()
         {
             rigidbody = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
             gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+            bulletController = GameObject.Find("BulletManager").GetComponent<BulletController>();
         }
 
         private void FixedUpdate()
@@ -177,6 +179,7 @@ namespace Platformer
                     if (timeBetweenShots<=0) {
                         // Instantiate a bullet and set its position to the player's position
                         GameObject bullet = Instantiate(bulletPrefab, gunpoint.transform.position, Quaternion.identity);
+                        bullet.GetComponent<Bullet>().SetDamage(bulletController.bulletDamage);
                         timeBetweenShots = 2f;
                     
                     // Calculate the velocity vector for the bullet based on the target direction and bullet speed

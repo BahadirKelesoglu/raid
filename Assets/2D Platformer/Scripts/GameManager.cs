@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace Platformer
 {
@@ -13,10 +14,14 @@ namespace Platformer
         private PlayerController player;
         public GameObject deathPlayerPrefab;
         public Text coinText;
+        public GameObject deathCanvas;
+        public GameObject deathCanvasButtons;
+        
 
         void Start()
         {
             player = GameObject.Find("Player").GetComponent<PlayerController>();
+            deathCanvas.SetActive(false);
         }
 
         void Update()
@@ -34,7 +39,20 @@ namespace Platformer
 
         private void ReloadLevel()
         {
-            Application.LoadLevel(Application.loadedLevel);
+            deathCanvas.SetActive(true);
+            deathCanvasButtons.SetActive(true);
+        }
+
+        public void Retry()
+        {
+            // Reload the current scene
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+        }
+
+        public void GoBackToEpisodes()
+        {
+            SceneManager.LoadScene("Episodes");
         }
     }
 }
